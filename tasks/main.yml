@@ -71,6 +71,12 @@
   notify:
     - restart node exporter
 
+- name: open port with firewalld
+  firewalld:
+    port: "{{ prometheus_node_exporter_port }}/tcp"
+    permanent: yes
+    state: enabled
+
 - meta: flush_handlers
 
 - name: ensure prometheus node exporter service is enabled and started

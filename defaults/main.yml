@@ -10,6 +10,11 @@ prometheus_node_exporter_enabled_collectors: []
 # https://github.com/prometheus/node_exporter#disabled-by-default
 prometheus_node_exporter_disabled_collectors: []
 
+# node-exporter listening port (TCP)
+prometheus_node_exporter_port: 9100
+
+# running flags
 prometheus_node_exporter_config_flags:
-  'web.listen-address': '0.0.0.0:9100'
+  'web.listen-address': '0.0.0.0:{{ prometheus_node_exporter_port }}'
   'log.level': 'info'
+
