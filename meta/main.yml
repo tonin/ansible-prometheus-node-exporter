@@ -1,8 +1,5 @@
 ---
 
-dependencies:
-  - UnderGreen.prometheus-exporters-common
-
 galaxy_info:
   author: Sergei Antipov
   company: 2GIS

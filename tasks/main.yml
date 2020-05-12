@@ -1,5 +1,8 @@
 ---
 
+- name: "Prepare for installation"
+  include: "init.yml"
+
 - name: download prometheus node exporter binary
   get_url:
     url: "{{ url }}"
@@ -71,11 +74,28 @@
   notify:
     - restart node exporter
 
+- name: check if we run firewalld on CentOS
+  stat:
+    path: /sbin/firewalld
+  changed_when: False
+  register: firewalld_sbin
+
+- name: check if we run firewalld on Debian or Ubuntu
+  stat:
+    path: /usr/sbin/firewalld
+  changed_when: False
+  register: firewalld_usr_sbin
+  when: firewalld_sbin.stat.exists == False
+
+# This requires Ansible to be run with Python 3 (firewalld modules are Python 3 only)
 - name: open port with firewalld
   firewalld:
     port: "{{ prometheus_node_exporter_port }}/tcp"
     permanent: yes
+    immediate: yes
     state: enabled
+  when: firewalld_sbin.stat.exists or firewalld_usr_sbin.stat.exists
+  notify: restart firewalld
 
 - meta: flush_handlers
 
