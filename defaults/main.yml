@@ -5,7 +5,7 @@ prometheus_exporters_common_user: prometheus
 prometheus_exporters_common_group: prometheus
 
 # directories used by node-exporter
-prometheus_exporters_common_root_dir: /opt/prometheus/exporters
+prometheus_exporters_common_root_dir: /usr/local/src/prometheus
 prometheus_exporters_common_dist_dir: "{{ prometheus_exporters_common_root_dir }}/dist"
 prometheus_exporters_common_log_dir: /var/log/prometheus
 prometheus_exporters_common_conf_dir: /etc/prometheus/exporters
@@ -13,7 +13,7 @@ prometheus_exporters_common_textfile_scripts: "{{ prometheus_exporters_common_ro
 prometheus_exporters_common_textfile_output: /var/lib/prometheus/node-exporter
 
 # minimum supported version: 0.15
-prometheus_node_exporter_version: 0.18.1
+prometheus_node_exporter_version: 1.0.1
 prometheus_node_exporter_release_name: "node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64"
 
 # https://github.com/prometheus/node_exporter#enabled-by-default
@@ -27,6 +27,8 @@ prometheus_node_exporter_port: 9100
 
 # running flags
 prometheus_node_exporter_config_flags:
-  'web.listen-address': '0.0.0.0:{{ prometheus_node_exporter_port }}'
+  'web.listen-address': ':{{ prometheus_node_exporter_port }}'
   'log.level': 'info'
+  'collector.diskstats.ignored-devices': '^(ram|loop|fd)\d+$'
+  'collector.filesystem.ignored-mount-points': '^/(sys|proc|dev|run)($|/)'
 
