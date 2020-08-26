@@ -6,10 +6,26 @@
 - name: reinit node exporter
   command: initctl reload-configuration
 
+# This can fail when fail2ban is running too, see https://github.com/systemd/systemd/issues/2830
+# Stopping and restarting is not an option because then fail2ban is not restarted
 - name: restart firewalld
   service:
     name: firewalld
-    state: restarted
+    state: stopped
+  notify: start fail2ban
+
+- name: start fail2ban
+  service:
+    name: fail2ban
+    state: started
+  # We ignore error here as fail2ban may not be installed
+  ignore_errors: True
+  notify: start firewalld
+
+- name: start firewalld
+  service:
+    name: firewalld
+    state: started
 
 - name: restart node exporter
   service:

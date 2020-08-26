@@ -13,6 +13,7 @@ prometheus_exporters_common_textfile_scripts: "{{ prometheus_exporters_common_ro
 prometheus_exporters_common_textfile_output: /var/lib/prometheus/node-exporter
 
 # minimum supported version: 0.15
+# See https://github.com/prometheus/node_exporter/tags for latest
 prometheus_node_exporter_version: 1.0.1
 prometheus_node_exporter_release_name: "node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64"
 
@@ -31,4 +32,5 @@ prometheus_node_exporter_config_flags:
   'log.level': 'info'
   'collector.diskstats.ignored-devices': '^(ram|loop|fd)\d+$'
   'collector.filesystem.ignored-mount-points': '^/(sys|proc|dev|run)($|/)'
+  'collector.textfile.directory': '{{ prometheus_exporters_common_textfile_output }}'
 
