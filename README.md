@@ -18,10 +18,6 @@ All needed packages will be installed with this role.
 | prometheus_node_exporter_url                | string |                                                                                    | not defined                                                                                                                      | Custom URL to download node_exporter if you can't access to github                                       |
 
 
-## Dependencies
-
-- UnderGreen.prometheus-exporters-common
-
 ## Example Playbook
 
 ```yaml
@@ -52,7 +48,7 @@ All needed packages will be installed with this role.
 
 ## Note:
 
-Due to [prometheus/node_exporter#640](https://github.com/prometheus/node_exporter/pull/640) and [prometheus/node_exporter#639](https://github.com/prometheus/node_exporter/pull/639) changes, this role can only support the minimum version 0.15 of node_exporter.
+Forked from [UnderGreen/ansible-prometheus-node-exporter](https://github.com/UnderGreen/ansible-prometheus-node-exporter) with dependency integrated to be a standalone role.
 
 ## License
 
